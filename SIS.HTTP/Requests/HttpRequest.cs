@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using SIS.HTTP.Common;
+using SIS.HTTP.Cookies;
 using SIS.HTTP.Enums;
 using SIS.HTTP.Exceptions;
 using SIS.HTTP.Headers;
 using SIS.HTTP.Headers.Contracts;
 using SIS.HTTP.Requests.Contracts;
-
+using SIS.HTTP.Cookies.Contracts;
 namespace SIS.HTTP.Requests
 {
     public class HttpRequest : IHttpRequest
@@ -19,6 +20,7 @@ namespace SIS.HTTP.Requests
             this.FormData = new Dictionary<string, object>();
             this.QueryData = new Dictionary<string, object>();
             this.Headers = new HttpHeaderCollection();
+            this.Cookies = new HttpCookieCollection();
 
             this.ParseRequest(requestString);
         }
@@ -28,7 +30,10 @@ namespace SIS.HTTP.Requests
         public Dictionary<string, object> FormData { get; }
         public Dictionary<string, object> QueryData { get; }
         public IHttpHeaderCollection Headers { get; }
+        public HttpCookieCollection Cookies { get; }
         public HttpRequestMethod RequestMethod { get; private set; }
+
+        IHttpCookieCollection IHttpRequest.Cookies => throw new NotImplementedException();
 
         private bool IsValidRequestLine(string[] requestLineParams)
         {
@@ -128,8 +133,23 @@ namespace SIS.HTTP.Requests
         {
             this.ParseRequestQueryParameters();
             this.ParseRequestFormDataParameters(requestBody); //TODO: Split
+           
         }
 
+        private void ParseCookies()
+        {
+            if (this.Headers.ContainsHeader(HttpHeader.Cookie))
+            {
+                string value = this.Headers.GetHeader(HttpHeader.Cookie).Value;
+                string[] unparsedCookies = value.Split(new [] {"; "},StringSplitOptions.RemoveEmptyEntries);
+                foreach (string unparsedCookie in unparsedCookies)
+                {
+                    string[] cookieKeyValuePair = unparsedCookie.Split(new [] { '=' },2);
+                    HttpCookie httpCookie = new HttpCookie(cookieKeyValuePair[0], cookieKeyValuePair[1],false);
+                    this.Cookies.AddCookie(httpCookie);
+                }
+            }
+        }
         private void ParseRequest(string requestString)
         {
             string[] splitRequestString = requestString
@@ -146,11 +166,12 @@ namespace SIS.HTTP.Requests
             this.ParseRequestMethod(requestLineParams);
             this.ParseRequestUrl(requestLineParams);
             this.ParseRequestPath();
+            this.ParseCookies();
 
             this.ParseRequestHeaders(this.ParsePlainRequestHeaders(splitRequestString).ToArray());
-            //this.ParseCookies();
 
             this.ParseRequestParameters(splitRequestString[splitRequestString.Length - 1]);
         }
+       
     }
 }

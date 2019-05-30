@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Text;
 using SIS.HTTP.Common;
+using SIS.HTTP.Cookies;
 using SIS.HTTP.Enums;
 using SIS.HTTP.Extensions;
 using SIS.HTTP.Headers;
@@ -10,11 +11,19 @@ using SIS.HTTP.Responses.Contracts;
 
 namespace SIS.HTTP.Responses
 {
-    public class HttpResponse : IHttpResponse
+    public class HttpResponse : IHttpResponse  
     {
+        public HttpResponseStatusCode StatusCode { get; set; }
+
+        public IHttpHeaderCollection Headers { get; }
+
+        public HttpCookieCollection Cookies { get; }
+
+        public byte[] Content { get; set; }
         public HttpResponse()
         {
             this.Headers = new HttpHeaderCollection();
+            this.Cookies = new HttpCookieCollection();
             this.Content = new byte[0];
         }
 
@@ -24,17 +33,14 @@ namespace SIS.HTTP.Responses
             this.StatusCode = statusCode;
         }
 
-        public HttpResponseStatusCode StatusCode { get; set; }
-
-        public IHttpHeaderCollection Headers { get; }
-
-        public byte[] Content { get; set; }
-
         public void AddHeader(HttpHeader header)
         {
             this.Headers.AddHeader(header);
         }
-
+        public void AddCookie(HttpCookie cookie)
+        {
+            this.Cookies.AddCookie(cookie);
+        }
         public byte[] GetBytes()
         {
             byte[] httpResponseBytesWithoutBody = Encoding.UTF8.GetBytes(this.ToString());
@@ -63,6 +69,10 @@ namespace SIS.HTTP.Responses
                 .Append(GlobalConstants.HttpNewLine)
                 .Append($"{this.Headers}").Append(GlobalConstants.HttpNewLine);
 
+            if (this.Cookies.HasCookies())
+            {
+                result.Append($"{this.Cookies}").Append(GlobalConstants.HttpNewLine);
+            }
             result.Append(GlobalConstants.HttpNewLine);
 
             return result.ToString();

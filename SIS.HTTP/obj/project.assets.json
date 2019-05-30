@@ -692,11 +692,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\n.markov\\Desktop\\SIS\\SIS.HTTP\\SIS.HTTP.csproj",
+      "projectUniqueName": "C:\\Users\\n.markov\\Desktop\\SIS\\SoftUni-Web\\SIS.HTTP\\SIS.HTTP.csproj",
       "projectName": "SIS.HTTP",
-      "projectPath": "C:\\Users\\n.markov\\Desktop\\SIS\\SIS.HTTP\\SIS.HTTP.csproj",
+      "projectPath": "C:\\Users\\n.markov\\Desktop\\SIS\\SoftUni-Web\\SIS.HTTP\\SIS.HTTP.csproj",
       "packagesPath": "C:\\Users\\n.markov\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\n.markov\\Desktop\\SIS\\SIS.HTTP\\obj\\",
+      "outputPath": "C:\\Users\\n.markov\\Desktop\\SIS\\SoftUni-Web\\SIS.HTTP\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

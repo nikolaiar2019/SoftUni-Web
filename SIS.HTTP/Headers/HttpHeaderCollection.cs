@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using SIS.HTTP.Common;
+using SIS.HTTP.Cookies;
 using SIS.HTTP.Headers.Contracts;
 
 namespace SIS.HTTP.Headers
@@ -35,5 +37,9 @@ namespace SIS.HTTP.Headers
         public override string ToString() => string.Join("\r\n",
             this.httpHeaders.Values.Select(header => header.ToString()));
 
+        internal void AddCookie(HttpCookie httpCookie)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
