@@ -9,6 +9,8 @@ using SIS.HTTP.Headers;
 using SIS.HTTP.Headers.Contracts;
 using SIS.HTTP.Requests.Contracts;
 using SIS.HTTP.Cookies.Contracts;
+using SIS.HTTP.Sessions.Contracts;
+
 namespace SIS.HTTP.Requests
 {
     public class HttpRequest : IHttpRequest
@@ -34,6 +36,8 @@ namespace SIS.HTTP.Requests
         public HttpRequestMethod RequestMethod { get; private set; }
 
         IHttpCookieCollection IHttpRequest.Cookies => throw new NotImplementedException();
+
+        public IHttpSession Session { get ;private set; }
 
         private bool IsValidRequestLine(string[] requestLineParams)
         {
