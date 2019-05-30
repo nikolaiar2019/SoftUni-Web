@@ -10,6 +10,7 @@ using SIS.HTTP.Requests.Contracts;
 using SIS.HTTP.Responses.Contracts;
 using SIS.WebServer.Result;
 using SIS.WebServer.Routing.Contracts;
+using SIS.WebServer.Sessions;
 
 namespace SIS.WebServer
 {
@@ -18,6 +19,7 @@ namespace SIS.WebServer
         private readonly Socket client;
 
         private readonly IServerRoutingTable serverRoutingTable;
+
 
         public ConnectionHandler(Socket client, IServerRoutingTable serverRoutingTable)
         {
@@ -79,6 +81,19 @@ namespace SIS.WebServer
             this.client.Send(byteSegments, SocketFlags.None);
         }
 
+        private string SetRequestSession(IHttpRequest httpRequest)
+        {
+            string sessionId = null;
+
+            if (httpRequest.Cookies.ContainsCookie(HttpSessionStorage.SessionCookieKey))
+            {
+
+            }
+            else
+            {
+
+            }
+        }
         public async Task ProcessRequestAsync()
         {
             IHttpResponse httpResponse = null;
