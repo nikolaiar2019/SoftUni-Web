@@ -813,6 +813,16 @@
         "compile": {
           "ref/netstandard1.3/System.Threading.Tasks.dll": {}
         }
+      },
+      "Demo.Models/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "compile": {
+          "bin/placeholder/Demo.Models.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Demo.Models.dll": {}
+        }
       }
     }
   },
@@ -3260,10 +3270,16 @@
         "system.threading.tasks.4.0.11.nupkg.sha512",
         "system.threading.tasks.nuspec"
       ]
+    },
+    "Demo.Models/1.0.0": {
+      "type": "project",
+      "path": "../Demo.Models/Demo.Models.csproj",
+      "msbuildProject": "../Demo.Models/Demo.Models.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETStandard,Version=v2.0": [
+      "Demo.Models >= 1.0.0",
       "Microsoft.EntityFrameworkCore.SqlServer >= 2.2.4",
       "Microsoft.EntityFrameworkCore.SqlServer.Design >= 1.1.6",
       "Microsoft.EntityFrameworkCore.Tools >= 2.2.4",
@@ -3299,7 +3315,11 @@
       },
       "frameworks": {
         "netstandard2.0": {
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\n.markov\\Desktop\\SIS\\SoftUni-Web\\Demo.Models\\Demo.Models.csproj": {
+              "projectPath": "C:\\Users\\n.markov\\Desktop\\SIS\\SoftUni-Web\\Demo.Models\\Demo.Models.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
