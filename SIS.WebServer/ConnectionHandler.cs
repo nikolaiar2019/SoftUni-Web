@@ -3,6 +3,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using SIS.HTTP.Common;
+using SIS.HTTP.Cookies;
 using SIS.HTTP.Enums;
 using SIS.HTTP.Exceptions;
 using SIS.HTTP.Requests;
@@ -87,11 +88,24 @@ namespace SIS.WebServer
 
             if (httpRequest.Cookies.ContainsCookie(HttpSessionStorage.SessionCookieKey))
             {
-
+                var cookie = httpRequest.Cookies.GetCookie(HttpSessionStorage.SessionCookieKey);
+                sessionId = cookie.Value;
             }
             else
             {
+                sessionId = Guid.NewGuid().ToString();
+            }
 
+            httpRequest.Session = HttpSessionStorage.GetSession(sessionId);
+            return httpRequest.Session.Id;
+
+        }
+
+        private void SetResponseSession(IHttpResponse httpResponse, string sessionId)
+        {
+            if (sessionId != null)
+            {
+                httpResponse.AddCookie(new HttpCookie(HttpSessionStorage.SessionCookieKey,sessionId));
             }
         }
         public async Task ProcessRequestAsync()
@@ -105,8 +119,9 @@ namespace SIS.WebServer
                 if (httpRequest != null)
                 {
                     Console.WriteLine($"Processing: {httpRequest.RequestMethod} {httpRequest.Path}...");
-
+                    string sessionId = this.SetRequestSession(httpRequest);
                     httpResponse = this.HandleRequest(httpRequest);
+                    this.SetResponseSession(httpResponse,sessionId);
                 }
             }
             catch (BadRequestException e)
