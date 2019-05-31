@@ -1,0 +1,6 @@
+C:\Users\n.markov\Desktop\SIS\SoftUni-Web\Demo.Data\bin\Debug\netstandard2.0\Demo.Data.deps.json
+C:\Users\n.markov\Desktop\SIS\SoftUni-Web\Demo.Data\bin\Debug\netstandard2.0\Demo.Data.dll
+C:\Users\n.markov\Desktop\SIS\SoftUni-Web\Demo.Data\obj\Debug\netstandard2.0\Demo.Data.csprojAssemblyReference.cache
+C:\Users\n.markov\Desktop\SIS\SoftUni-Web\Demo.Data\obj\Debug\netstandard2.0\Demo.Data.csproj.CoreCompileInputs.cache
+C:\Users\n.markov\Desktop\SIS\SoftUni-Web\Demo.Data\obj\Debug\netstandard2.0\Demo.Data.AssemblyInfoInputs.cache
+C:\Users\n.markov\Desktop\SIS\SoftUni-Web\Demo.Data\obj\Debug\netstandard2.0\Demo.Data.AssemblyInfo.cs

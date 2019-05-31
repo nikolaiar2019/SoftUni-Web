@@ -13,10 +13,16 @@ namespace Demo.App
         {
             IServerRoutingTable serverRoutingTable = new ServerRoutingTable();
 
+            //[GET] MAPPING
             serverRoutingTable.Add(HttpRequestMethod.Get, "/", httpRequest 
                 => new HomeController().Home(httpRequest));
-
+            serverRoutingTable.Add(HttpRequestMethod.Get, "/Login", httpRequest
+                => new HomeController().Login(httpRequest));
+            serverRoutingTable.Add(HttpRequestMethod.Get, "/Logout", httpRequest
+                => new HomeController().Logout(httpRequest));
+            //[POST] MAPPING
             Server server = new Server(8000, serverRoutingTable);
+
             server.Run();
         }
     }

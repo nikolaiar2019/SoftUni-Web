@@ -32,12 +32,12 @@ namespace SIS.HTTP.Requests
         public Dictionary<string, object> FormData { get; }
         public Dictionary<string, object> QueryData { get; }
         public IHttpHeaderCollection Headers { get; }
-        public HttpCookieCollection Cookies { get; }
+        public IHttpCookieCollection Cookies { get; }
         public HttpRequestMethod RequestMethod { get; private set; }
 
         IHttpCookieCollection IHttpRequest.Cookies => throw new NotImplementedException();
 
-        public IHttpSession Session { get ;private set; }
+        public IHttpSession Session { get ; set; }
 
         private bool IsValidRequestLine(string[] requestLineParams)
         {
@@ -100,7 +100,7 @@ namespace SIS.HTTP.Requests
 
         private void ParseRequestHeaders(string[] plainHeaders)
         {
-            plainHeaders.Select(plainHeader => plainHeader.Split(new[] { ':', ' ' }
+            plainHeaders.Select(plainHeader => plainHeader.Split(new[] {": "}
                 , StringSplitOptions.RemoveEmptyEntries))
                 .ToList()
                 .ForEach(headerKeyValuePair => this.Headers.AddHeader(new HttpHeader(headerKeyValuePair[0], headerKeyValuePair[1])));
